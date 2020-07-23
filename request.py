@@ -119,8 +119,24 @@ def print_resp(resp):
         print(key, value)
 
 
+def get_meta_info():
+    with open('hot1.html') as f:
+        html = f.read()
+    bs = BeautifulSoup(html, features="lxml")
+    meta = bs.find(name="meta", attrs={'itemprop': 'url'})
+    # print(f'meta tag: {meta}')
+    # for m in meta:
+    #     print(m.attrs)
+    if meta:
+        print(f'meta content: {meta.attrs["content"]}')
+        content = meta.attrs["content"]
+        *_, token = content.rsplit('/', 1)
+        print(f'meta token: {token}')
+
+
 if __name__ == "__main__":
     # parse_question_keywords()
     # parse_question_content()
     # get_topic_feeds()
-    get_question_answers()
+    # get_question_answers()
+    get_meta_info()
